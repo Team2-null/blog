@@ -1,5 +1,72 @@
-package com.teamnull.blog.controller;
+package com.teamnull.blog.service;
 
-public class PostService {
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
+import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
+import com.teamnull.blog.dto.post.response.PostInquiryResponseDto;
+import com.teamnull.blog.entity.Post;
+import com.teamnull.blog.repository.PostRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor // 얘가 있어야 final이 붙어있는 레퍼지토리 필드에 연결
+public class PostService implements PostServiceInterface{
+    private final PostRepository postRepository;
+
+    // 게시글 작성
+    public Post createPost(PostCreateRequestDto postCreateRequestDto) {
+        Post post = new Post(postCreateRequestDto);
+        postRepository.save(post);
+        return post;
+    }
+
+    // 게시글 전체 조회
+    public List<PostInquiryResponseDto> inquiryAllPost() {
+        List<Post> postList = postRepository.findAllByOrderByCreateAtDesc();
+        List<PostInquiryResponseDto> postInquiryResponseDtoList = new ArrayList<>();
+        for (Post post : postList) {
+            postInquiryResponseDtoList.add(new PostInquiryResponseDto(post));
+        }
+        return postInquiryResponseDtoList;
+    }
+
+    // 게시글 선택 조회
+    public PostInquiryResponseDto inquirySelectPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
+        );
+        return new PostInquiryResponseDto(post);
+    }
+
+    // 게시글 수정하기
+    public Post updatePost(Long id, PostUpdateRequestDto postUpdateRequestDto) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
+        );
+        if (post.isValidPassword(postUpdateRequestDto.getPassword())) {
+            post.updatePost(postUpdateRequestDto);
+            postRepository.save(post);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        return post;
+    }
+
+    // 게시글 삭제하기
+    public String deletePost(Long id, String password) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
+        );
+        if (post.isValidPassword(password)) {
+            postRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        return "삭제 완료";
+    }
 }

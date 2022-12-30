@@ -1,4 +1,4 @@
-package com.teamnull.blog.service;
+package com.teamnull.blog.dto.auth.request;
 
 public class LoginRequestDto {
 

@@ -1,4 +1,4 @@
-package com.teamnull.blog.dto.request;
+package com.teamnull.blog.dto.post.request;
 
 public class PostDeleteRequestDto {
     

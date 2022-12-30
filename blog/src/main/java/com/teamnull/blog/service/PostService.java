@@ -3,11 +3,11 @@ package com.teamnull.blog.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
-import com.teamnull.blog.dto.post.response.PostInquiryResponseDto;
+import com.teamnull.blog.dto.post.response.PostGetResponseDto;
+import org.springframework.stereotype.Service;
+
 import com.teamnull.blog.entity.Post;
 import com.teamnull.blog.repository.PostRepository;
 
@@ -26,21 +26,21 @@ public class PostService implements PostServiceInterface{
     }
 
     // 게시글 전체 조회
-    public List<PostInquiryResponseDto> inquiryAllPost() {
+    public List<PostGetResponseDto> getAllPost() {
         List<Post> postList = postRepository.findAllByOrderByCreateAtDesc();
-        List<PostInquiryResponseDto> postInquiryResponseDtoList = new ArrayList<>();
+        List<PostGetResponseDto> postGetResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
-            postInquiryResponseDtoList.add(new PostInquiryResponseDto(post));
+            postGetResponseDtoList.add(new PostGetResponseDto(post));
         }
-        return postInquiryResponseDtoList;
+        return postGetResponseDtoList;
     }
 
     // 게시글 선택 조회
-    public PostInquiryResponseDto inquirySelectPost(Long id) {
+    public PostGetResponseDto getSelectPost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
         );
-        return new PostInquiryResponseDto(post);
+        return new PostGetResponseDto(post);
     }
 
     // 게시글 수정하기

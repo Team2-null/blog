@@ -8,4 +8,5 @@ import com.teamnull.blog.entity.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByCreateAtDesc();
+      
 }

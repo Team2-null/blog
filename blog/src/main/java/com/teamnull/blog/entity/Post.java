@@ -1,17 +1,17 @@
 package com.teamnull.blog.entity;
 
+import javax.persistence.*;
+
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
-import com.teamnull.blog.entity.TimeStamped;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post extends TimeStamped {
+public class Post extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

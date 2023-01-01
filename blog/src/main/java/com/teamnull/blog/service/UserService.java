@@ -2,9 +2,15 @@ package com.teamnull.blog.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Service;
+
 import com.teamnull.blog.dto.auth.request.LoginRequestDto;
 import com.teamnull.blog.dto.auth.request.SignupRequestDto;
 
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
 public class UserService implements UserServiceInterface{
 
     @Override

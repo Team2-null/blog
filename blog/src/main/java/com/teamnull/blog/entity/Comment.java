@@ -2,15 +2,22 @@ package com.teamnull.blog.entity;
 
 import javax.persistence.*;
 
+import com.teamnull.blog.dto.comment.request.CommentRequestDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor
-public class Comment {
+@AllArgsConstructor
+public class Comment extends TimeStamped{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // commentId
     private Long id;
 
     @Column
@@ -24,18 +31,18 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    public Comment(String contents, User user, Post post) {
-        this.contents = contents;
-        this.user = user;
-        this.post = post;
-    }
-
-    public void updateComment(String contents){
+    public Comment(String contents) {
         this.contents = contents;
     }
 
-    public boolean isMatchedUserId(Long userId) {
-        return this.user.getId().equals(userId);
+
+    public void updateComment(CommentRequestDto requestDto){
+        this.contents = requestDto.toEntity().getContents();
     }
+
+    // 토큰으로 사용자 검사해서 없어도 되지 않나요?
+//    public boolean isMatchedUserId(Long userId) {
+//        return this.user.getId().equals(userId);
+//    }
     
 }

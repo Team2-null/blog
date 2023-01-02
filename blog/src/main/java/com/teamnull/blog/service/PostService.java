@@ -3,6 +3,8 @@ package com.teamnull.blog.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
@@ -19,7 +21,7 @@ public class PostService implements PostServiceInterface{
     private final PostRepository postRepository;
 
     // 게시글 작성
-    public Post createPost(PostCreateRequestDto postCreateRequestDto) {
+    public Post createPost(PostCreateRequestDto postCreateRequestDto, HttpServletRequest request) {
         Post post = new Post(postCreateRequestDto);
         postRepository.save(post);
         return post;
@@ -44,7 +46,7 @@ public class PostService implements PostServiceInterface{
     }
 
     // 게시글 수정하기
-    public Post updatePost(Long id, PostUpdateRequestDto postUpdateRequestDto) {
+    public Post updatePost(Long id, PostUpdateRequestDto postUpdateRequestDto, HttpServletRequest request) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
         );
@@ -58,7 +60,7 @@ public class PostService implements PostServiceInterface{
     }
 
     // 게시글 삭제하기
-    public String deletePost(Long id, String password) {
+    public String deletePost(Long id, String password, HttpServletRequest request) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
         );

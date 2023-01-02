@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import com.teamnull.blog.entity.enums.UserRoleEnum;
+
 @Getter
 @NoArgsConstructor
 @Entity(name = "users")

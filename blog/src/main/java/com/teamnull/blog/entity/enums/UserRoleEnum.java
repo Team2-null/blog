@@ -1,6 +1,6 @@
 package com.teamnull.blog.entity.enums;
 
-public enum UserRoleErum {
+public enum UserRoleEnum {
     ADMIN,
     USER
 }

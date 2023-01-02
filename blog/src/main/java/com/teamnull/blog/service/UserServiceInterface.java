@@ -6,6 +6,7 @@ import com.teamnull.blog.dto.auth.request.LoginRequestDto;
 import com.teamnull.blog.dto.auth.request.SignupRequestDto;
 
 public interface UserServiceInterface {
-    boolean signup(SignupRequestDto signupRequestDto, HttpServletRequest request);
-    boolean login(LoginRequestDto loginRequestDto, HttpServletRequest request);
+    public void signup(SignupRequestDto signupRequestDto, HttpServletRequest request);
+
+    public boolean login(LoginRequestDto loginRequestDto, HttpServletRequest request);
 }

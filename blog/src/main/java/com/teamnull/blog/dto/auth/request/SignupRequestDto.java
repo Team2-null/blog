@@ -1,6 +1,7 @@
 package com.teamnull.blog.dto.auth.request;
 
 import lombok.Getter;
+
 import javax.validation.constraints.Pattern;
 
 @Getter

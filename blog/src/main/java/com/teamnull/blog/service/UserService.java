@@ -1,14 +1,9 @@
 package com.teamnull.blog.service;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.teamnull.blog.entity.enums.UserRoleEnum;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import com.teamnull.blog.dto.auth.request.LoginRequestDto;
 import com.teamnull.blog.dto.auth.request.SignupRequestDto;
 import com.teamnull.blog.entity.User;
+import com.teamnull.blog.entity.enums.UserRoleEnum;
 import com.teamnull.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

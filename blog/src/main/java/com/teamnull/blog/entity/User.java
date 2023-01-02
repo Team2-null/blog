@@ -1,33 +1,28 @@
 package com.teamnull.blog.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+import javax.persistence.*;
+
 @Getter
 @NoArgsConstructor
-@Table(name = "users")
+@Entity(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
-
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
 
-    // @OneToMany(mappedBy = "user")
-    // private List<Post> posts = new ArrayList<>();
-
-    public User(String username, String password) {
+    public User(String username, String password, UserRoleEnum role) {
         this.username = username;
         this.password = password;
-    }    
+        this.role = role;
+    }
 }

@@ -2,6 +2,8 @@ package com.teamnull.blog.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.teamnull.blog.dto.comment.request.CommentRequestDto;
+import com.teamnull.blog.dto.comment.response.CommentResponseDto;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamnull.blog.dto.comment.request.CommentCreateRequestDto;
-import com.teamnull.blog.dto.comment.request.CommentDeleteRequestDto;
-import com.teamnull.blog.dto.comment.request.CommentUpdateRequestDto;
-import com.teamnull.blog.dto.comment.response.CommentCreateResponseDto;
-import com.teamnull.blog.dto.comment.response.CommentDeleteResponseDto;
-import com.teamnull.blog.dto.comment.response.CommentUpdateResponseDto;
 import com.teamnull.blog.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,22 +22,24 @@ import lombok.RequiredArgsConstructor;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/comments")
+    @PostMapping("posts/{postId}/comments")
     @ResponseBody
-    public CommentCreateResponseDto createComment(CommentCreateRequestDto requestDto, HttpServletRequest request){
-        return commentService.createComment(requestDto, request);
+    public CommentResponseDto createComment(@PathVariable Long postId,
+                                            CommentRequestDto requestDto,
+                                            HttpServletRequest request){
+        return commentService.createComment(postId, requestDto, request);
     }
 
-    @PutMapping("/comments/{commentId}")
+    @PutMapping("posts/{postId}/comments/{commentId}")
     @ResponseBody
-    public CommentUpdateResponseDto updateComment(@PathVariable Long commentId, CommentUpdateRequestDto requestDto, HttpServletRequest request){
+    public CommentResponseDto updateComment(@PathVariable Long commentId, CommentRequestDto requestDto, HttpServletRequest request){
         return commentService.updateComment(commentId, requestDto, request);
     }
 
-    @DeleteMapping("/comment/{commentId}")
+    @DeleteMapping("posts/{postId}/comments/{commentId}")
     @ResponseBody
-    public CommentDeleteResponseDto deleteComment(@PathVariable Long commentId, CommentDeleteRequestDto requestDto, HttpServletRequest request){
-        return commentService.deleteComment(commentId, requestDto, request);
+    public String deleteComment(@PathVariable Long commentId, HttpServletRequest request){
+        return "success";
     }
 
 }

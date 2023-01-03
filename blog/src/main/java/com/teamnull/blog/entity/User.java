@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -37,10 +37,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public boolean isValidPassword(String password) {
-        return this.password.equals(password);
     }
 
     public boolean isAdmin() {

@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
@@ -26,7 +25,7 @@ public class UserService implements UserServiceInterface{
     private static final String ADMIN_TOKEN = "dnfldmldlfwndlfdmsdnjfghktnahrrmarmarma";
     @Override
     @Transactional
-    public void signup(SignupRequestDto signupRequestDto, HttpServletRequest request) {
+    public void signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
@@ -61,7 +60,7 @@ public class UserService implements UserServiceInterface{
         );
 
         // 비밀번호 확인
-        if (!user.isValidPassword(password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번가 일치하지 않습니다.");
         }
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));

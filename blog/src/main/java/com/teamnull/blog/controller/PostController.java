@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.teamnull.blog.dto.post.response.ResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
@@ -47,11 +46,8 @@ public class PostController {
 
     // 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public ResponseDto deletePost(@PathVariable Long id, HttpServletRequest request) {
-        try {
-            return postService.deletePost(id, request);
-        } catch (com.teamnull.blog.dto.post.response.ResponseDto responseDto) {
-            throw new RuntimeException(responseDto);
-        }
+    public String deletePost(@PathVariable Long id, HttpServletRequest request) {
+        postService.deletePost(id, request);
+        return "삭제 완료";
     }
 }

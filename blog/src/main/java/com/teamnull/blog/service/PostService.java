@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
-import com.teamnull.blog.dto.post.response.ResponseDto;
 import com.teamnull.blog.entity.User;
 import com.teamnull.blog.entity.enums.UserRoleEnum;
 import com.teamnull.blog.repository.CommentRepository;
@@ -98,11 +97,11 @@ public class PostService implements PostServiceInterface {
     }
 
     // 게시글 삭제하기
-    public ResponseDto deletePost(Long id, HttpServletRequest request) throws ResponseDto {
+    public void deletePost(Long id, HttpServletRequest request) {
         Post post = postRepository.findById(id).orElseThrow(
-                () -> new ResponseDto("조회하신 아이디의 게시글이 없습니다.")
+                () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
         );
-        ResponseDto response = new ResponseDto("게시물삭제가 완료되었습니다.");
+        
         String token = jwtUtil.resolveToken(request);
         Claims claims = null;
 
@@ -110,20 +109,20 @@ public class PostService implements PostServiceInterface {
             if (jwtUtil.validateToken(token)) {
                 claims = jwtUtil.getUserInfoFromToken(token);
             } else {
-                throw new ResponseDto("토큰이 유효하지 않습니다");
+                throw new IllegalArgumentException("토큰이 유효하지 않습니다");
             }
         }
         User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                () -> new ResponseDto("회원을 찾을 수 없습니다")
+                () -> new IllegalArgumentException("회원을 찾을 수 없습니다")
         );
+
         if (user.getRole() == UserRoleEnum.ADMIN) {
             postRepository.delete(post);
-            return response;
         }
+
         post = postRepository.findByIdAndUserId(id, user.getId()).orElseThrow(
-                () -> new ResponseDto("작성자만 삭제 가능합니다")
+                () -> new IllegalArgumentException("작성자만 삭제 가능합니다")
         );
         postRepository.deleteById(id);
-        return response;
     }
 }

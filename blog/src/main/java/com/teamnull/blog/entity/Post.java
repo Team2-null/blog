@@ -20,39 +20,40 @@ public class Post extends TimeStamped{
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
-    private String writer;
+    // @Column(nullable = false)
+    // private String writer;
     @Column(nullable = false)
     private String content;
-    @Column(nullable = false)
-    private String password;
+    // @Column(nullable = false)
+    // private String password;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
+    @OrderBy("modifiedAt desc")
+    private final List<Comment> comments = new ArrayList<>();
 
     public Post(PostCreateRequestDto postCreateRequestDto, User user) {
         this.title = postCreateRequestDto.getTitle();
-        this.writer = postCreateRequestDto.getWriter();
+        // this.writer = postCreateRequestDto.getWriter();
         this.content = postCreateRequestDto.getContent();
-        this.password = postCreateRequestDto.getPassword();
+        // this.password = postCreateRequestDto.getPassword();
         this.user = getUser();
     }
     
-    public boolean isValidPassword(String inputPassword) {
-        if (inputPassword.equals(this.password)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // public boolean isValidPassword(String inputPassword) {
+    //     if (inputPassword.equals(this.password)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     public void updatePost(PostUpdateRequestDto postUpdateRequestDto) {
         this.title = postUpdateRequestDto.getTitle();
-        this.writer = postUpdateRequestDto.getWriter();
+        // this.writer = postUpdateRequestDto.getWriter();
         this.content = postUpdateRequestDto.getContent();
     }
 }

@@ -4,6 +4,9 @@ import com.teamnull.blog.entity.enums.UserRoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Getter
@@ -13,13 +16,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
+
+    @OneToMany(mappedBy = "user")
+    private final List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<Comment> comments = new ArrayList<>();
 
     public User(String username, String password, UserRoleEnum role) {
         this.username = username;
@@ -29,6 +41,10 @@ public class User {
 
     public boolean isValidPassword(String password) {
         return this.password.equals(password);
+    }
+
+    public boolean isAdmin() {
+        return this.role == UserRoleEnum.ADMIN;
     }
 
 }

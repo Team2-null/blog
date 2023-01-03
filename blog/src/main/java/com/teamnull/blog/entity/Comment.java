@@ -8,11 +8,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder
+// @Builder
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
+// @AllArgsConstructor
 public class Comment extends TimeStamped{
 
     @Id
@@ -37,7 +37,7 @@ public class Comment extends TimeStamped{
 
 
     public void updateComment(CommentRequestDto requestDto){
-        this.contents = requestDto.toEntity().getContents();
+        this.contents = requestDto/* .toEntity() */.getContents();
     }
 
     // 토큰으로 사용자 검사해서 없어도 되지 않나요?

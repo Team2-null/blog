@@ -9,6 +9,6 @@ import com.teamnull.blog.dto.comment.response.CommentResponseDto;
 
 public interface CommentServiceInterface {
     public CommentResponseDto createComment(Long postId, CommentRequestDto requestDto, HttpServletRequest request);
-    public CommentResponseDto updateComment(Long commentId, CommentRequestDto requestDto, HttpServletRequest request);
-    public String deleteComment(Long commentId, HttpServletRequest request);
+    public CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto requestDto, HttpServletRequest request);
+    public String deleteComment(Long postId, Long commentId, HttpServletRequest request);
 }

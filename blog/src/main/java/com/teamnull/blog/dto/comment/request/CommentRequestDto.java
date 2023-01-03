@@ -4,17 +4,20 @@ import com.teamnull.blog.entity.Comment;
 import com.teamnull.blog.entity.Post;
 import com.teamnull.blog.entity.User;
 
+import lombok.Getter;
+
+@Getter
 public class CommentRequestDto {
     private Long commentId;
     private String contents;
 
 
-    public Comment toEntity(){
-        Comment comments = Comment.builder()
-                .id(commentId)
-                .contents(contents)
-                .build();
+    // public Comment toEntity(){
+    //     Comment comments = Comment.builder()
+    //             .id(commentId)
+    //             .contents(contents)
+    //             .build();
 
-        return comments;
-    }
+    //     return comments;
+    // }
 }

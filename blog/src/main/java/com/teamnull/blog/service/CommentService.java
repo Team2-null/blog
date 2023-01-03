@@ -53,7 +53,7 @@ public class CommentService implements CommentServiceInterface {
                     () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
             );
 
-            Comment comment = new Comment(requestDto.toEntity().getContents());
+            Comment comment = new Comment(requestDto/* .toEntity() */.getContents());
             commentRepository.save(comment);
 
             return new CommentResponseDto(comment);
@@ -63,29 +63,30 @@ public class CommentService implements CommentServiceInterface {
     }
 
 
-    // 댓글 조회
-    @Transactional(readOnly = true)
-    public List<CommentResponseDto> getComment(Long postId){
-        List<Comment> commentList = commentRepository.findAllBypostIdByrderByCreateAtDesc(postId);
+    // // 댓글 조회
+    // @Transactional(readOnly = true)
+    // public List<CommentResponseDto> getComment(Long postId){
+    //     List<Comment> commentList = commentRepository.findAllBypost_IdByOrderByCreateAtDesc(postId);
 
-        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+    //     List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
-        for(Comment comment : commentList){
-            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-            commentResponseDtoList.add(commentResponseDto);
-        }
+    //     for(Comment comment : commentList){
+    //         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+    //         commentResponseDtoList.add(commentResponseDto);
+    //     }
 
-        return commentResponseDtoList;
-    }
+    //     return commentResponseDtoList;
+    // }
 
 
 
 
     // 댓글 수정
     @Transactional
-    public CommentResponseDto updateComment(Long commentId,
-                                                  CommentRequestDto requestDto,
-                                                  HttpServletRequest request) {
+    public CommentResponseDto updateComment(Long postId,
+                                            Long commentId,
+                                            CommentRequestDto requestDto,
+                                            HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
 
@@ -142,5 +143,12 @@ public class CommentService implements CommentServiceInterface {
         } else {
             return null;
         }
+    }
+
+
+    @Override
+    public String deleteComment(Long postId, Long commentId, HttpServletRequest request) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

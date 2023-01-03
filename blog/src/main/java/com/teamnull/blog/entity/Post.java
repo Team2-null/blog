@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 
@@ -28,16 +27,19 @@ public class Post extends TimeStamped{
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    @JsonIgnore
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     public Post(PostCreateRequestDto postCreateRequestDto, User user) {
         this.title = postCreateRequestDto.getTitle();
         this.writer = postCreateRequestDto.getWriter();
         this.content = postCreateRequestDto.getContent();
         this.password = postCreateRequestDto.getPassword();
-        this.userId = getUserId();
+        this.user = getUser();
     }
     
     public boolean isValidPassword(String inputPassword) {

@@ -1,6 +1,7 @@
 package com.teamnull.blog.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
@@ -33,8 +34,10 @@ public class PostService implements PostServiceInterface {
 
     // 게시글 전체 조회
     @Transactional(readOnly = true)
-    public List<Post> getAllPost() {
-        List<Post> postList = postRepository.findAllByOrderByCreateAtDesc();
+    public List<PostGetResponseDto> getAllPost() {
+        List<PostGetResponseDto> postList = postRepository.findAllByOrderByCreateAtDesc()
+                                            .stream().map(PostGetResponseDto::new).collect(Collectors.toList());
+                                             
         return postList;
     }
 

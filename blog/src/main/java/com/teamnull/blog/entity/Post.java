@@ -20,12 +20,8 @@ public class Post extends TimeStamped{
     private Long id;
     @Column(nullable = false)
     private String title;
-    // @Column(nullable = false)
-    // private String writer;
     @Column(nullable = false)
     private String content;
-    // @Column(nullable = false)
-    // private String password;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

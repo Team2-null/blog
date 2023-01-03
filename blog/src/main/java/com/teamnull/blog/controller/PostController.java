@@ -29,7 +29,7 @@ public class PostController {
 
     // 게시글 전체 조회하기
     @GetMapping("/posts")
-    public List<Post> inquiryAllPost() {
+    public List<PostGetResponseDto> inquiryAllPost() {
         return postService.getAllPost();
     }
 

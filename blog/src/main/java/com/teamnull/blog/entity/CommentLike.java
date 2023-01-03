@@ -1,6 +1,6 @@
 package com.teamnull.blog.entity;
 
-import javax.persistence.Column;
+// import javax.persistence.Column;
 import javax.persistence.*;
 
 import lombok.Getter;

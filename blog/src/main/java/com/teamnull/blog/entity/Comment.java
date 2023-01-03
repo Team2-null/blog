@@ -3,8 +3,8 @@ package com.teamnull.blog.entity;
 import javax.persistence.*;
 
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+// import lombok.AllArgsConstructor;
+// import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

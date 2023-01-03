@@ -1,5 +1,8 @@
 package com.teamnull.blog.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,16 +19,12 @@ public class Post extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Column(nullable = false)
     private String title;
-
     @Column(nullable = false)
     private String writer;
-
     @Column(nullable = false)
     private String content;
-
     @Column(nullable = false)
     private String password;
 
@@ -40,7 +39,7 @@ public class Post extends TimeStamped{
         this.password = postCreateRequestDto.getPassword();
         this.userId = getUserId();
     }
-
+    
     public boolean isValidPassword(String inputPassword) {
         if (inputPassword.equals(this.password)) {
             return true;

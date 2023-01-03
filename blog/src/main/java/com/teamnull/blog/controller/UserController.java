@@ -2,14 +2,18 @@ package com.teamnull.blog.controller;
 
 import com.teamnull.blog.dto.auth.request.LoginRequestDto;
 import com.teamnull.blog.dto.auth.request.SignupRequestDto;
+import com.teamnull.blog.dto.auth.response.LoginResponseDto;
 import com.teamnull.blog.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +28,10 @@ public class UserController {
         return "회원가입에 성공했습니다.";
     }
 
+    @ApiOperation(value = "로그인", notes = "회원이름, 패스워드를 입력받아 로그인을 요청합니다.")
     @PostMapping("/login")
-    public boolean login(LoginRequestDto requestDto, HttpServletRequest request) {
-        return userService.login(requestDto, request);
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        userService.login(loginRequestDto, response);
+        return new LoginResponseDto(HttpStatus.OK, "로그인에 성공했습니다.");
     }
 }

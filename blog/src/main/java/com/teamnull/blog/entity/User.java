@@ -1,11 +1,10 @@
 package com.teamnull.blog.entity;
 
+import com.teamnull.blog.entity.enums.UserRoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
-import com.teamnull.blog.entity.enums.UserRoleEnum;
 
 @Getter
 @NoArgsConstructor
@@ -27,4 +26,9 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+    public boolean isValidPassword(String password) {
+        return this.password.equals(password);
+    }
+
 }

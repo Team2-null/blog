@@ -3,6 +3,7 @@ package com.teamnull.blog.util.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,12 +43,12 @@ public class WebSecurityConfig {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/api/auth/**").permitAll()
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
                                 .antMatchers("/api/posts/**").permitAll()
                                 .anyRequest().authenticated()
                                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         
-        http.formLogin().loginPage("/api/auth/login");
+        http.formLogin().disable();
         
         return http.build();
     }

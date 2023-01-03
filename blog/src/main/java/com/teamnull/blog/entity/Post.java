@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Post extends TimeStamped{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String title;
@@ -37,23 +37,12 @@ public class Post extends TimeStamped{
 
     public Post(PostCreateRequestDto postCreateRequestDto, User user) {
         this.title = postCreateRequestDto.getTitle();
-        // this.writer = postCreateRequestDto.getWriter();
         this.content = postCreateRequestDto.getContent();
-        // this.password = postCreateRequestDto.getPassword();
-        this.user = getUser();
+        this.user = user;
     }
-    
-    // public boolean isValidPassword(String inputPassword) {
-    //     if (inputPassword.equals(this.password)) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
     public void updatePost(PostUpdateRequestDto postUpdateRequestDto) {
         this.title = postUpdateRequestDto.getTitle();
-        // this.writer = postUpdateRequestDto.getWriter();
         this.content = postUpdateRequestDto.getContent();
     }
 }

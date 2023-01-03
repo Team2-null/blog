@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService implements CommentServiceInterface {
@@ -57,6 +60,22 @@ public class CommentService implements CommentServiceInterface {
         } else {
             return null;
         }
+    }
+
+
+    // 댓글 조회
+    @Transactional(readOnly = true)
+    public List<CommentResponseDto> getComment(Long postId){
+        List<Comment> commentList = commentRepository.findAllBypostIdByrderByCreateAtDesc(postId);
+
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        for(Comment comment : commentList){
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            commentResponseDtoList.add(commentResponseDto);
+        }
+
+        return commentResponseDtoList;
     }
 
 

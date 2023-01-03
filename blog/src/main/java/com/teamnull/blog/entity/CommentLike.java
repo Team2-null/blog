@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Like {
+public class CommentLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    boolean isliked = false;
-    @Column(nullable = false)
-    boolean isdisliked = false;
+    // @Column(nullable = false)
+    // boolean isliked = false;
+    // @Column(nullable = false)
+    // boolean isdisliked = false;
 }

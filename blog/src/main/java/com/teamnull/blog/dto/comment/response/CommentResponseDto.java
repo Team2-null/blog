@@ -2,6 +2,9 @@ package com.teamnull.blog.dto.comment.response;
 
 import com.teamnull.blog.entity.Comment;
 
+import lombok.Getter;
+
+@Getter
 public class CommentResponseDto {
     private String username;
     private String contents;

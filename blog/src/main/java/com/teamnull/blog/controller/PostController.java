@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.teamnull.blog.dto.post.response.ResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
@@ -28,7 +29,7 @@ public class PostController {
 
     // 게시글 전체 조회하기
     @GetMapping("/posts")
-    public List<PostGetResponseDto> inquiryAllPost() {
+    public List<Post> inquiryAllPost() {
         return postService.getAllPost();
     }
 
@@ -46,7 +47,11 @@ public class PostController {
 
     // 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public String deletePost(@PathVariable Long id, @RequestParam String password, HttpServletRequest request) {
-        return postService.deletePost(id, password, request);
+    public ResponseDto deletePost(@PathVariable Long id, HttpServletRequest request) {
+        try {
+            return postService.deletePost(id, request);
+        } catch (com.teamnull.blog.dto.post.response.ResponseDto responseDto) {
+            throw new RuntimeException(responseDto);
+        }
     }
 }

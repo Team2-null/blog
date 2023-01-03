@@ -31,6 +31,9 @@ public class Post extends TimeStamped{
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
+
     public Post(PostCreateRequestDto postCreateRequestDto, User user) {
         this.title = postCreateRequestDto.getTitle();
         this.writer = postCreateRequestDto.getWriter();

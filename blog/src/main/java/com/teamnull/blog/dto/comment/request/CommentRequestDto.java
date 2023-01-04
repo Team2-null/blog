@@ -10,7 +10,7 @@ import lombok.Getter;
 public class CommentRequestDto {
     private Long commentId;
     private String contents;
-
+    private Integer likes = 0;
 
     // public Comment toEntity(){
     //     Comment comments = Comment.builder()

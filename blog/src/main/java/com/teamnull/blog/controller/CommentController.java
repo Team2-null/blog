@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.teamnull.blog.service.CommentService;
+import com.teamnull.blog.service.LikeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
-
+    private final LikeService likeService;
 
     @PostMapping("/{postId}/comments")
     @ResponseBody
@@ -31,10 +32,10 @@ public class CommentController {
     }
 
 
-    // @GetMapping("posts/{postId}/comments")
-    // public List<CommentResponseDto> getComment(@PathVariable Long postId){
-    //     return commentService.getComment(postId);
-    // }
+    @GetMapping("posts/{postId}/comments")
+    public List<CommentResponseDto> getComment(@PathVariable Long postId){
+        return commentService.getComment(postId);
+    }
 
 
     @PutMapping("/{postId}/comments/{commentId}")
@@ -56,4 +57,12 @@ public class CommentController {
         return "success";
     }
 
+    @PostMapping("/{postId}/comments/{commentId}/like")
+    @ResponseBody
+    public CommentResponseDto likeComment(@PathVariable Long postId,
+                                          @PathVariable Long commentId,
+                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        return likeService.likeComment(postId, commentId, userDetails.getUser());
+    }
 }

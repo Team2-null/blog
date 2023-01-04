@@ -1,6 +1,5 @@
 package com.teamnull.blog.entity;
 
-// import javax.persistence.Column;
 import javax.persistence.*;
 
 import lombok.Getter;
@@ -13,8 +12,20 @@ public class CommentLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // @Column(nullable = false)
-    // boolean isliked = false;
-    // @Column(nullable = false)
-    // boolean isdisliked = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(nullable = false)
+    private Long postId;
+
+    @Column(nullable = false)
+    private Long commentId;
+
+    public CommentLike(User user, Long postId, Long commentId) {
+        this.user = user;
+        this.postId = postId;
+        this.commentId = commentId;
+    }
 }

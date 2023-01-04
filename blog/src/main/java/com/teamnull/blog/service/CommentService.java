@@ -47,20 +47,20 @@ public class CommentService implements CommentServiceInterface {
     }
 
 
-    // // 댓글 조회
-    // @Transactional(readOnly = true)
-    // public List<CommentResponseDto> getComment(Long postId){
-    //     List<Comment> commentList = commentRepository.findAllBypost_IdByOrderByCreateAtDesc(postId);
+    // 댓글 조회
+    @Transactional(readOnly = true)
+    public List<CommentResponseDto> getComment(Long postId){
+        List<Comment> commentList = commentRepository.findAllByPost_IdOrderByCreateAtDesc(postId);
 
-    //     List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
-    //     for(Comment comment : commentList){
-    //         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-    //         commentResponseDtoList.add(commentResponseDto);
-    //     }
+        for(Comment comment : commentList){
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            commentResponseDtoList.add(commentResponseDto);
+        }
 
-    //     return commentResponseDtoList;
-    // }
+        return commentResponseDtoList;
+    }
 
 
     // 댓글 수정

@@ -31,15 +31,24 @@ public class Comment extends TimeStamped{
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
+    @Column
+    private Integer likes;
+
     public Comment(CommentRequestDto requestDto, User user, Post post) {
         this.contents = requestDto.getContents();
         this.user = user;
         this.post = post;
+        this.likes = 0;
     }
 
 
     public void updateComment(CommentRequestDto requestDto){
         this.contents = requestDto/* .toEntity() */.getContents();
+    }
+
+    public void updateLike(boolean islike) {
+        likes += islike ? 1 : -1;
+        if(likes < 0) likes = 0;
     }
 
     // 토큰으로 사용자 검사해서 없어도 되지 않나요?

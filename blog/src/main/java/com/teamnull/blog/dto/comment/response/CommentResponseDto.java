@@ -8,10 +8,11 @@ import lombok.Getter;
 public class CommentResponseDto {
     private String username;
     private String contents;
-
+    private Integer likeCount;
 
     public CommentResponseDto(Comment comment) {
         this.username = comment.getUser().getUsername();
         this.contents = comment.getContents();
+        this.likeCount = comment.getLikes();
     }
 }

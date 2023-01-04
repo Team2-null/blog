@@ -43,17 +43,12 @@ public class Comment extends TimeStamped{
 
 
     public void updateComment(CommentRequestDto requestDto){
-        this.contents = requestDto/* .toEntity() */.getContents();
+        this.contents = requestDto.getContents();
     }
 
     public void updateLike(boolean islike) {
         likes += islike ? 1 : -1;
         if(likes < 0) likes = 0;
     }
-
-    // 토큰으로 사용자 검사해서 없어도 되지 않나요?
-//    public boolean isMatchedUserId(Long userId) {
-//        return this.user.getId().equals(userId);
-//    }
     
 }

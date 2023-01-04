@@ -8,7 +8,6 @@ import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
 import com.teamnull.blog.entity.User;
 import com.teamnull.blog.entity.enums.UserRoleEnum;
-import com.teamnull.blog.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import com.teamnull.blog.entity.Post;
@@ -21,9 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor // 얘가 있어야 final이 붙어있는 레퍼지토리 필드에 연결
 public class PostService implements PostServiceInterface {
     private final PostRepository postRepository;
-    private final CommentRepository commentRepository;
-
-
     // 게시글 작성
     @Transactional
     public PostGetResponseDto createPost(PostCreateRequestDto postCreateRequestDto, User user) {
@@ -72,20 +68,6 @@ public class PostService implements PostServiceInterface {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
         );
-        
-        // String token = jwtUtil.resolveToken(request);
-        // Claims claims = null;
-
-        // if (token != null) {
-        //     if (jwtUtil.validateToken(token)) {
-        //         claims = jwtUtil.getUserInfoFromToken(token);
-        //     } else {
-        //         throw new IllegalArgumentException("토큰이 유효하지 않습니다");
-        //     }
-        // }
-        // User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-        //         () -> new IllegalArgumentException("회원을 찾을 수 없습니다")
-        // );
 
         if (user.getRole() == UserRoleEnum.ADMIN) {
             postRepository.delete(post);

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.teamnull.blog.dto.comment.response.CommentResponseDto;
-import com.teamnull.blog.entity.Comment;
 import com.teamnull.blog.entity.Post;
 
 import lombok.Getter;

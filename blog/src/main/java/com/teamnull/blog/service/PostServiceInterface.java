@@ -5,7 +5,6 @@ import java.util.List;
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
-import com.teamnull.blog.entity.Post;
 import com.teamnull.blog.entity.User;
 
 public interface PostServiceInterface {

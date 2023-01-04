@@ -1,9 +1,5 @@
 package com.teamnull.blog.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
 import com.teamnull.blog.dto.comment.response.CommentResponseDto;
 import com.teamnull.blog.util.security.UserDetailsImpl;
@@ -30,13 +26,6 @@ public class CommentController {
                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.createComment(postId, requestDto, userDetails.getUser());
     }
-
-
-    @GetMapping("posts/{postId}/comments")
-    public List<CommentResponseDto> getComment(@PathVariable Long postId){
-        return commentService.getComment(postId);
-    }
-
 
     @PutMapping("/{postId}/comments/{commentId}")
     @ResponseBody

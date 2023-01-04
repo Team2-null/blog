@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
 import com.teamnull.blog.dto.comment.response.CommentResponseDto;
+import com.teamnull.blog.util.security.UserDetailsImpl;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.teamnull.blog.service.CommentService;
@@ -24,8 +26,8 @@ public class CommentController {
     @ResponseBody
     public CommentResponseDto createComment(@PathVariable Long postId,
                                             @RequestBody CommentRequestDto requestDto,
-                                            HttpServletRequest request){
-        return commentService.createComment(postId, requestDto, request);
+                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.createComment(postId, requestDto, userDetails.getUser());
     }
 
 
@@ -40,8 +42,8 @@ public class CommentController {
     public CommentResponseDto updateComment(@PathVariable Long postId,
                                             @PathVariable Long commentId,
                                             @RequestBody CommentRequestDto requestDto,
-                                            HttpServletRequest request){
-        return commentService.updateComment(postId, commentId, requestDto, request);
+                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.updateComment(postId, commentId, requestDto, userDetails.getUser());
     }
 
 
@@ -49,7 +51,8 @@ public class CommentController {
     @ResponseBody
     public String deleteComment(@PathVariable Long postId,
                                 @PathVariable Long commentId,
-                                HttpServletRequest request){
+                                @AuthenticationPrincipal UserDetailsImpl userDetails){
+        commentService.deleteComment(postId, commentId, userDetails.getUser());
         return "success";
     }
 

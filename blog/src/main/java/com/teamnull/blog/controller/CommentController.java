@@ -1,5 +1,7 @@
 package com.teamnull.blog.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
@@ -12,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
-@RequestMapping("/api/posts/{postId}")
+@RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
 
 
-    @PostMapping("/comments")
+    @PostMapping("/{postId}/comments")
     @ResponseBody
     public CommentResponseDto createComment(@PathVariable Long postId,
                                             @RequestBody CommentRequestDto requestDto,
@@ -33,7 +35,7 @@ public class CommentController {
     // }
 
 
-    @PutMapping("/comments/{commentId}")
+    @PutMapping("/{postId}/comments/{commentId}")
     @ResponseBody
     public CommentResponseDto updateComment(@PathVariable Long postId,
                                             @PathVariable Long commentId,
@@ -43,7 +45,7 @@ public class CommentController {
     }
 
 
-    @DeleteMapping("/comments/{commentId}")
+    @DeleteMapping("/{postId}/comments/{commentId}")
     @ResponseBody
     public String deleteComment(@PathVariable Long postId,
                                 @PathVariable Long commentId,

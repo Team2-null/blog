@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
-import com.teamnull.blog.entity.Post;
 import com.teamnull.blog.service.PostService;
 import com.teamnull.blog.util.security.UserDetailsImpl;
 
@@ -29,13 +28,13 @@ public class PostController {
 
     // 게시글 전체 조회하기
     @GetMapping("/posts")
-    public List<PostGetResponseDto> inquiryAllPost() {
+    public List<PostGetResponseDto> getAllPost() {
         return postService.getAllPost();
     }
 
     // 게시글 선택 조회하기
     @GetMapping("/posts/{id}")
-    public PostGetResponseDto inquirySelectPost(@PathVariable Long id) {
+    public PostGetResponseDto getSelectPost(@PathVariable Long id) {
         return postService.getSelectPost(id);
     }
 

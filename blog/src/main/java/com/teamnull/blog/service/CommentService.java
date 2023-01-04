@@ -32,6 +32,7 @@ public class CommentService implements CommentServiceInterface {
 
 
     // 댓글 등록
+    @Override
     @Transactional
     public CommentResponseDto createComment(Long postId, CommentRequestDto requestDto,
                                             HttpServletRequest request) {
@@ -82,6 +83,7 @@ public class CommentService implements CommentServiceInterface {
 
 
     // 댓글 수정
+    @Override
     @Transactional
     public CommentResponseDto updateComment(Long postId,
                                             Long commentId,
@@ -117,7 +119,8 @@ public class CommentService implements CommentServiceInterface {
 
 
     // 댓글 삭제
-    public String deleteComment(Long commentId, HttpServletRequest request) {
+    @Override
+    public String deleteComment(Long postId, Long commentId, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
 
@@ -143,12 +146,5 @@ public class CommentService implements CommentServiceInterface {
         } else {
             return null;
         }
-    }
-
-
-    @Override
-    public String deleteComment(Long postId, Long commentId, HttpServletRequest request) {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

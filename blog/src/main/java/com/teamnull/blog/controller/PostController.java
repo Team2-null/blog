@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
+import com.teamnull.blog.service.LikeService;
 import com.teamnull.blog.service.PostService;
 import com.teamnull.blog.util.security.UserDetailsImpl;
 
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final LikeService likeService;
 
     // 게시글 작성하기
     @PostMapping("/posts")
@@ -53,5 +55,14 @@ public class PostController {
                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
         postService.deletePost(id, userDetails.getUser());
         return "삭제 완료";
+    }
+
+    
+    @PostMapping("/posts/{postId}/like")
+    @ResponseBody
+    public PostGetResponseDto likeComment(@PathVariable Long postId,
+                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        return likeService.likePost(postId, userDetails.getUser());
     }
 }

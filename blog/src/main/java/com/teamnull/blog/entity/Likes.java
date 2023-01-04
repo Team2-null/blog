@@ -2,30 +2,33 @@ package com.teamnull.blog.entity;
 
 import javax.persistence.*;
 
+import com.teamnull.blog.entity.enums.LikeEnum;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Getter
-public class CommentLike {
+public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private LikeEnum type;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
-    private Long postId;
+    private Long targetId;
 
-    @Column(nullable = false)
-    private Long commentId;
-
-    public CommentLike(User user, Long postId, Long commentId) {
+    public Likes(User user, LikeEnum type, Long targetId) {
         this.user = user;
-        this.postId = postId;
-        this.commentId = commentId;
+        this.type = type;
+        this.targetId = targetId;
     }
 }

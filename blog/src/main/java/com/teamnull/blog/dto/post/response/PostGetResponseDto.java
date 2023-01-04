@@ -14,10 +14,10 @@ import lombok.Getter;
 public class PostGetResponseDto {
     private final String title;
     private final String content;
-    // private final int likeCount;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
     private final List<CommentResponseDto> comments;
+    private final Integer likeCount;
 
     public PostGetResponseDto(Post post) {
         this.title = post.getTitle();
@@ -25,6 +25,6 @@ public class PostGetResponseDto {
         this.createdAt = post.getCreateAt();
         this.modifiedAt = post.getModifiedAt();
         this.comments = post.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
-        // this.likeCount = 0;
+        this.likeCount = post.getLikes();
     }
 }

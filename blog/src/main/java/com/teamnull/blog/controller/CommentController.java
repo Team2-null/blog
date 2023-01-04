@@ -59,10 +59,9 @@ public class CommentController {
 
     @PostMapping("/{postId}/comments/{commentId}/like")
     @ResponseBody
-    public CommentResponseDto likeComment(@PathVariable Long postId,
-                                          @PathVariable Long commentId,
+    public CommentResponseDto likeComment(@PathVariable Long commentId,
                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        return likeService.likeComment(postId, commentId, userDetails.getUser());
+        return likeService.likeComment(commentId, userDetails.getUser());
     }
 }

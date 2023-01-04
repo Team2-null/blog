@@ -23,6 +23,9 @@ public class Post extends TimeStamped{
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private Integer likes;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -35,10 +38,16 @@ public class Post extends TimeStamped{
         this.title = postCreateRequestDto.getTitle();
         this.content = postCreateRequestDto.getContent();
         this.user = user;
+        this.likes = 0;
     }
 
     public void updatePost(PostUpdateRequestDto postUpdateRequestDto) {
         this.title = postUpdateRequestDto.getTitle();
         this.content = postUpdateRequestDto.getContent();
+    }
+
+    public void updateLike(boolean islike) {
+        likes += islike ? 1 : -1;
+        if(likes < 0) likes = 0;
     }
 }

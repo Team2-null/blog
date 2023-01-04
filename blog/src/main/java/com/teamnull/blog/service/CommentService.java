@@ -50,13 +50,9 @@ public class CommentService implements CommentServiceInterface {
                 throw new IllegalArgumentException("댓글 작성자만 수정이 가능합니다.");
         }
 
-        if (user.getRole() == UserRoleEnum.ADMIN) {
-            comment.updateComment(requestDto);
-            commentRepository.save(comment);
-        }
 
         comment.updateComment(requestDto);
-        commentRepository.save(comment);
+        //commentRepository.save(comment);
 
         return new CommentResponseDto(comment);
     }

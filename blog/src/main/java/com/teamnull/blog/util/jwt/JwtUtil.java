@@ -2,11 +2,15 @@ package com.teamnull.blog.util.jwt;
 
 
 import com.teamnull.blog.entity.enums.UserRoleEnum;
+import com.teamnull.blog.util.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +25,8 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
+
+    private final UserDetailsServiceImpl userDetailsService;
     
     public static final String AUTHORIZATION_HEADER = "Authorization"; // Header에 들어가는 key 값
     public static final String AUTHORIZATION_KEY = "auth"; // 사용자 권한의 key 값
@@ -76,5 +82,16 @@ public class JwtUtil {
             log.info("잘못된 JWT 토큰 입니다.");
         }
         return false;
+    }
+
+    // 토큰에서 사용자 정보 가져오기 // 위에서 이미 토큰 검증을 완료했다는 가정이므로 이 토큰은 유효하기 때문에 try-catch문이 없다
+    public Claims getUserInfoFromToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody(); // getBody를 통해 안에 정보들을 가져온다
+    }
+
+    // 인증 객체 생성
+    public Authentication createAuthentication(String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }

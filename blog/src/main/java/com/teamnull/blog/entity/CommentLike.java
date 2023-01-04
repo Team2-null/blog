@@ -1,28 +1,20 @@
 package com.teamnull.blog.entity;
 
+// import javax.persistence.Column;
 import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
 @NoArgsConstructor
+@Getter
 public class CommentLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany
-    @JoinColumn(name = "comment_id", nullable = false)
-    private Comment comment;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    
-    public CommentLike(Comment comment, User user, boolean islike) {
-        this.comment = comment;
-        this.user = user;
-    }
+    // @Column(nullable = false)
+    // boolean isliked = false;
+    // @Column(nullable = false)
+    // boolean isdisliked = false;
 }

@@ -1,12 +1,12 @@
 package com.teamnull.blog.service;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.teamnull.blog.dto.auth.request.LoginRequestDto;
 import com.teamnull.blog.dto.auth.request.SignupRequestDto;
 
-public interface UserServiceInterface {
-    public void signup(SignupRequestDto signupRequestDto, HttpServletRequest request);
+import javax.servlet.http.HttpServletResponse;
 
-    public boolean login(LoginRequestDto loginRequestDto, HttpServletRequest request);
+public interface UserServiceInterface {
+    public void signup(SignupRequestDto signupRequestDto);
+
+    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response);
 }

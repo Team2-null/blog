@@ -5,12 +5,13 @@ import com.teamnull.blog.dto.auth.request.SignupRequestDto;
 import com.teamnull.blog.entity.User;
 import com.teamnull.blog.entity.enums.UserRoleEnum;
 import com.teamnull.blog.repository.UserRepository;
+import com.teamnull.blog.util.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Service
@@ -18,12 +19,13 @@ import java.util.Optional;
 public class UserService implements UserServiceInterface{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     // 관리자 토큰
     private static final String ADMIN_TOKEN = "dnfldmldlfwndlfdmsdnjfghktnahrrmarmarma";
     @Override
     @Transactional
-    public void signup(SignupRequestDto signupRequestDto, HttpServletRequest request) {
+    public void signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
@@ -47,9 +49,20 @@ public class UserService implements UserServiceInterface{
     }
 
     @Override
-    public boolean login(LoginRequestDto loginRequestDto, HttpServletRequest request) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    @Transactional(readOnly = true)
+    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        String username = loginRequestDto.getUsername();
+        String password = loginRequestDto.getPassword();
 
+        // 회원이름 확인
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("회원이름을 찾을 수 없습니다.")
+        );
+
+        // 비밀번호 확인
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("비밀번가 일치하지 않습니다.");
+        }
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+    }
 }

@@ -9,16 +9,14 @@ import lombok.Getter;
 @Getter
 public class PostGetResponseDto {
     private final String title;
-    private final String writer;
     private final String content;
-    private final LocalDateTime dateCreated;
-    private final LocalDateTime dateUpdated;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime modifiedAt;
 
     public PostGetResponseDto(Post post) {
         this.title = post.getTitle();
-        this.writer = post.getWriter();
         this.content = post.getContent();
-        this.dateCreated = post.getCreateAt();
-        this.dateUpdated = post.getModifiedAt();
+        this.createdAt = post.getCreateAt();
+        this.modifiedAt = post.getModifiedAt();
     }
 }

@@ -1,47 +1,59 @@
 package com.teamnull.blog.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.teamnull.blog.dto.comment.request.CommentRequestDto;
+import com.teamnull.blog.dto.comment.response.CommentResponseDto;
+import com.teamnull.blog.util.security.UserDetailsImpl;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
-import com.teamnull.blog.dto.comment.request.CommentCreateRequestDto;
-import com.teamnull.blog.dto.comment.request.CommentDeleteRequestDto;
-import com.teamnull.blog.dto.comment.request.CommentUpdateRequestDto;
-import com.teamnull.blog.dto.comment.response.CommentCreateResponseDto;
-import com.teamnull.blog.dto.comment.response.CommentDeleteResponseDto;
-import com.teamnull.blog.dto.comment.response.CommentUpdateResponseDto;
 import com.teamnull.blog.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/comments")
+
+    @PostMapping("/{postId}/comments")
     @ResponseBody
-    public CommentCreateResponseDto createComment(CommentCreateRequestDto requestDto, HttpServletRequest request){
-        return commentService.createComment(requestDto, request);
+    public CommentResponseDto createComment(@PathVariable Long postId,
+                                            @RequestBody CommentRequestDto requestDto,
+                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.createComment(postId, requestDto, userDetails.getUser());
     }
 
-    @PutMapping("/comments/{commentId}")
+
+    // @GetMapping("posts/{postId}/comments")
+    // public List<CommentResponseDto> getComment(@PathVariable Long postId){
+    //     return commentService.getComment(postId);
+    // }
+
+
+    @PutMapping("/{postId}/comments/{commentId}")
     @ResponseBody
-    public CommentUpdateResponseDto updateComment(@PathVariable Long commentId, CommentUpdateRequestDto requestDto, HttpServletRequest request){
-        return commentService.updateComment(commentId, requestDto, request);
+    public CommentResponseDto updateComment(@PathVariable Long postId,
+                                            @PathVariable Long commentId,
+                                            @RequestBody CommentRequestDto requestDto,
+                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.updateComment(postId, commentId, requestDto, userDetails.getUser());
     }
 
-    @DeleteMapping("/comment/{commentId}")
+
+    @DeleteMapping("/{postId}/comments/{commentId}")
     @ResponseBody
-    public CommentDeleteResponseDto deleteComment(@PathVariable Long commentId, CommentDeleteRequestDto requestDto, HttpServletRequest request){
-        return commentService.deleteComment(commentId, requestDto, request);
+    public String deleteComment(@PathVariable Long postId,
+                                @PathVariable Long commentId,
+                                @AuthenticationPrincipal UserDetailsImpl userDetails){
+        commentService.deleteComment(postId, commentId, userDetails.getUser());
+        return "success";
     }
 
 }

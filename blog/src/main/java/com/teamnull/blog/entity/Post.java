@@ -1,5 +1,8 @@
 package com.teamnull.blog.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
@@ -13,35 +16,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Post extends TimeStamped{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private String writer;
-    @Column(nullable = false)
     private String content;
-    @Column(nullable = false)
-    private String password;
 
-    public Post(PostCreateRequestDto postCreateRequestDto) {
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "post")
+    @OrderBy("modifiedAt desc")
+    private final List<Comment> comments = new ArrayList<>();
+
+    public Post(PostCreateRequestDto postCreateRequestDto, User user) {
         this.title = postCreateRequestDto.getTitle();
-        this.writer = postCreateRequestDto.getWriter();
         this.content = postCreateRequestDto.getContent();
-        this.password = postCreateRequestDto.getPassword();
-    }
-
-    public boolean isValidPassword(String inputPassword) {
-        if (inputPassword.equals(this.password)) {
-            return true;
-        } else {
-            return false;
-        }
+        this.user = user;
     }
 
     public void updatePost(PostUpdateRequestDto postUpdateRequestDto) {
         this.title = postUpdateRequestDto.getTitle();
-        this.writer = postUpdateRequestDto.getWriter();
         this.content = postUpdateRequestDto.getContent();
     }
 }

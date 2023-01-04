@@ -10,7 +10,6 @@ public class UserTest {
     @Nested
     @DisplayName("회원 가입")
     class CreateUser {
-        private Long id;
         private String username;
         private String password;
         private UserRoleEnum role;

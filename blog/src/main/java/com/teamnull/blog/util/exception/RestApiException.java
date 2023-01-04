@@ -1,4 +1,3 @@
-
 package com.teamnull.blog.util.exception;
 
 import lombok.Getter;
@@ -12,12 +11,4 @@ public class RestApiException {
         this.errorMessage = errorMessage;
         this.errorCode = errorCode;
     }
-
-
-
-
-
-
-
-
 }

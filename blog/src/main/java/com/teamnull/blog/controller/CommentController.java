@@ -42,8 +42,8 @@ public class CommentController {
     public CommentDeleteResponseDto deleteComment(@PathVariable Long postId,
                                                   @PathVariable Long commentId,
                                                   @AuthenticationPrincipal UserDetailsImpl userDetails){
-        commentService.deleteComment(postId, commentId, userDetails.getUser());
-        return new CommentDeleteResponseDto("댓글 삭제가 완료되었습니다",200);
+
+        return commentService.deleteComment(postId, commentId, userDetails.getUser());
     }
 
     @PostMapping("/{postId}/comments/{commentId}/like")

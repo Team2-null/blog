@@ -2,6 +2,7 @@ package com.teamnull.blog.service;
 
 
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
+import com.teamnull.blog.dto.comment.response.CommentDeleteResponseDto;
 import com.teamnull.blog.dto.comment.response.CommentResponseDto;
 import com.teamnull.blog.entity.Comment;
 import com.teamnull.blog.entity.Post;
@@ -59,9 +60,11 @@ public class CommentService implements CommentServiceInterface {
 
 
     // 댓글 삭제
-    public void deleteComment(Long postId, Long commentId, User user) {
+    public CommentDeleteResponseDto deleteComment(Long postId, Long commentId, User user) {
 
         Post post = findPost(postId);
+
+
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new NullPointerException("댓글이 존재하지 않습니다.")
@@ -77,7 +80,8 @@ public class CommentService implements CommentServiceInterface {
         }
 
         commentRepository.deleteById(commentId);
-
+        String msg = "댓글 삭제가 완료되었습니다.";
+        return new CommentDeleteResponseDto(msg,200);
 
     }
 

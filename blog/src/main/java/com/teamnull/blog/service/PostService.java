@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
+import com.teamnull.blog.dto.post.response.PostDeleteResponseDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
 import com.teamnull.blog.entity.User;
 import com.teamnull.blog.entity.enums.UserRoleEnum;
@@ -64,7 +65,10 @@ public class PostService implements PostServiceInterface {
 
     // 게시글 삭제하기
     @Transactional
-    public void deletePost(Long id, User user) {
+    public PostDeleteResponseDto deletePost(Long id, User user) {
+
+
+
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회하신 아이디의 게시글이 없습니다.")
         );
@@ -77,5 +81,9 @@ public class PostService implements PostServiceInterface {
                 () -> new IllegalArgumentException("작성자만 삭제 가능합니다")
         );
         postRepository.deleteById(id);
+
+        String msg = "게시글 삭제가 완료되었습니다.";
+        return new PostDeleteResponseDto(msg,200);
+
     }
 }

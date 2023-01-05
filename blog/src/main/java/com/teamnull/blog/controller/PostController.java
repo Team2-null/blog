@@ -53,8 +53,8 @@ public class PostController {
     @DeleteMapping("/posts/{id}")
     public PostDeleteResponseDto deletePost(@PathVariable Long id,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        postService.deletePost(id, userDetails.getUser());
-        return new PostDeleteResponseDto("게시글 삭제 완료",200);
+
+        return postService.deletePost(id, userDetails.getUser());
     }
 
     

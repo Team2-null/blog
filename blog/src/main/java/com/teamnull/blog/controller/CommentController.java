@@ -1,6 +1,7 @@
 package com.teamnull.blog.controller;
 
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
+import com.teamnull.blog.dto.comment.response.CommentDeleteResponseDto;
 import com.teamnull.blog.dto.comment.response.CommentResponseDto;
 import com.teamnull.blog.util.security.UserDetailsImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,11 +40,11 @@ public class CommentController {
 
     @DeleteMapping("/{postId}/comments/{commentId}")
     @ResponseBody
-    public String deleteComment(@PathVariable Long postId,
-                                @PathVariable Long commentId,
-                                @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public CommentDeleteResponseDto deleteComment(@PathVariable Long postId,
+                                                  @PathVariable Long commentId,
+                                                  @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.deleteComment(postId, commentId, userDetails.getUser());
-        return "success";
+        return new CommentDeleteResponseDto("댓글 삭제가 완료되었습니다",200);
     }
 
     @PostMapping("/{postId}/comments/{commentId}/like")

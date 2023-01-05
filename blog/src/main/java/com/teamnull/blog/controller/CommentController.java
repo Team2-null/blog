@@ -3,14 +3,13 @@ package com.teamnull.blog.controller;
 import com.teamnull.blog.dto.comment.request.CommentRequestDto;
 import com.teamnull.blog.dto.comment.response.CommentDeleteResponseDto;
 import com.teamnull.blog.dto.comment.response.CommentResponseDto;
-import com.teamnull.blog.util.security.UserDetailsImpl;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
+import com.teamnull.blog.dto.like.response.CommentLikeResponseDto;
 import com.teamnull.blog.service.CommentService;
 import com.teamnull.blog.service.LikeService;
-
+import com.teamnull.blog.util.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -49,8 +48,8 @@ public class CommentController {
 
     @PostMapping("/{postId}/comments/{commentId}/like")
     @ResponseBody
-    public CommentResponseDto likeComment(@PathVariable Long commentId,
-                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public CommentLikeResponseDto likeComment(@PathVariable Long commentId,
+                                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return likeService.likeComment(commentId, userDetails.getUser());
     }

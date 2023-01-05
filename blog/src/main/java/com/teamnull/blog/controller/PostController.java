@@ -1,19 +1,18 @@
 package com.teamnull.blog.controller;
 
-import java.util.List;
-
-import com.teamnull.blog.dto.post.response.PostDeleteResponseDto;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
+import com.teamnull.blog.dto.like.response.PostLikeResponseDto;
 import com.teamnull.blog.dto.post.request.PostCreateRequestDto;
 import com.teamnull.blog.dto.post.request.PostUpdateRequestDto;
+import com.teamnull.blog.dto.post.response.PostDeleteResponseDto;
 import com.teamnull.blog.dto.post.response.PostGetResponseDto;
 import com.teamnull.blog.service.LikeService;
 import com.teamnull.blog.service.PostService;
 import com.teamnull.blog.util.security.UserDetailsImpl;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -61,8 +60,8 @@ public class PostController {
     
     @PostMapping("/posts/{postId}/like")
     @ResponseBody
-    public PostGetResponseDto likeComment(@PathVariable Long postId,
-                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public PostLikeResponseDto likeComment(@PathVariable Long postId,
+                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return likeService.likePost(postId, userDetails.getUser());
     }

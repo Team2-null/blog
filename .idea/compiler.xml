@@ -11,5 +11,10 @@
         <module name="blog.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="blog" target="11" />
+      <module name="blog.main" target="11" />
+      <module name="blog.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

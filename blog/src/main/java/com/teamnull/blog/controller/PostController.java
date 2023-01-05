@@ -2,6 +2,7 @@ package com.teamnull.blog.controller;
 
 import java.util.List;
 
+import com.teamnull.blog.dto.post.response.PostDeleteResponseDto;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,10 +52,10 @@ public class PostController {
 
     // 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public String deletePost(@PathVariable Long id,
-                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public PostDeleteResponseDto deletePost(@PathVariable Long id,
+                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         postService.deletePost(id, userDetails.getUser());
-        return "삭제 완료";
+        return new PostDeleteResponseDto("게시글 삭제 완료",200);
     }
 
     
